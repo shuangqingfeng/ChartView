@@ -18,6 +18,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         ChartView vChartView = findViewById(R.id.chart_view);
         List<Car> cars = new ArrayList<>();
         Car car = new Car();
@@ -41,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
         car3.setDesc("动力");
         cars.add(car3);
         Car car4 = new Car();
-        car4.setMinute(4.88f);
-        car4.setMinuteDesc("4.88");
+        car4.setMinute(3.50f);
+        car4.setMinuteDesc("3.50");
         car4.setDesc("性价比");
         cars.add(car4);
         Car car5 = new Car();
@@ -56,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
         car6.setDesc("空间");
         cars.add(car6);
         Car car7 = new Car();
-        car7.setMinute(4.00f);
-        car7.setMinuteDesc("4.00");
+        car7.setMinute(3.00f);
+        car7.setMinuteDesc("3.00");
         car7.setDesc("舒适度");
         cars.add(car7);
         vChartView.setData(cars);

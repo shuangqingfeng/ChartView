@@ -1,5 +1,7 @@
 package com.baozi.chartview;
 
+import android.animation.AnimatorSet;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,6 +13,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 
 import androidx.core.content.ContextCompat;
 
@@ -59,7 +62,6 @@ public class ChartView extends View {
         DisplayMetrics dm = getResources().getDisplayMetrics();
         mScreenWidth = dm.widthPixels;
         mItemWidth = mScreenWidth / 8;
-
     }
 
     private int minute = 5;
@@ -111,6 +113,23 @@ public class ChartView extends View {
             return;
         }
         cars = list;
-        invalidate();
+        AnimatorSet set = new AnimatorSet();
+        for (int i = 0; i < cars.size(); i++) {
+            ValueAnimator animator = ValueAnimator.ofFloat(0, cars.get(i).getMinute());
+
+            final int finalI = i;
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    cars.get(finalI).setMinute((Float) valueAnimator.getAnimatedValue());
+                    invalidate();
+                }
+            });
+            set.playTogether(animator);
+        }
+        set.setInterpolator(new DecelerateInterpolator());
+        set.setDuration(2000);
+        set.start();
+//        invalidate();
     }
 }
